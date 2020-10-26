@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">instalogin</string>
+    <string name="app_name">Fakebook</string>
     <string name="login">Login</string>
     <string name="create_account">Create an Account</string>
     <string name="email_address">E-mail address</string>
