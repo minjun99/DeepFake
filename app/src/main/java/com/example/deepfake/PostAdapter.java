@@ -32,6 +32,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        Post post = mPost.get(position);
+
+        if(post.getDescription().equals("")){
+            holder.description.setVisibility(View.GONE);
+        } else {
+            holder.description.setVisibility(View.VISIBLE);
+            holder.description.setText(post.getDescription());
+        }
+
+
     }
 
     @Override
