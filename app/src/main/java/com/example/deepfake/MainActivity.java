@@ -19,7 +19,6 @@ import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity {
-
     private BottomNavigationView bottomNavigationView;
     private FragmentManager fm;
     private FragmentTransaction ft;
@@ -31,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         bottomNavigationView = findViewById(R.id.bottomNavi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -51,13 +49,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
         frag1 = new frag_home();
         frag2 = new frag_add();
         frag3 = new frag_mypage();
         setFrag(0);
-
     }
-
 
     private void setFrag(int n) {
         fm = getSupportFragmentManager();
@@ -76,8 +73,5 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
                 break;
         }
-
-
     }
-
 }
