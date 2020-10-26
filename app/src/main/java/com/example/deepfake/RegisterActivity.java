@@ -8,12 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
+import com.android.volley.*;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -89,10 +86,14 @@ public class RegisterActivity extends AppCompatActivity {
                             String msg = (String) jsonObj.get("msg");
 
                             if (status == 200 && msg.equals("success")) {
+                                Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                 startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_LONG).show();
                             }
                         } catch (ParseException e) {
+                            Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                         }
                     }
@@ -100,6 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_LONG).show();
                         Log.d("onErrorResponse", "에러 -> " + error.getMessage());
                     }
                 }

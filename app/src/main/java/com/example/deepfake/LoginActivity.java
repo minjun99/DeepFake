@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.*;
 import com.android.volley.toolbox.StringRequest;
@@ -89,10 +90,14 @@ public class LoginActivity extends AppCompatActivity {
                             String msg = (String) jsonObj.get("msg");
 
                             if (status == 200 && msg.equals("success")) {
+                                Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_LONG).show();
                             }
                         } catch (ParseException e) {
+                            Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                         }
                     }
@@ -100,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_LONG).show();
                         Log.d("onErrorResponse", "에러 -> " + error.getMessage());
                     }
                 }
