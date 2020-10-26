@@ -1,6 +1,7 @@
 package com.example.deepfake;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,13 +17,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public Context mContext;
     public List<Post> mPost;
 
-
-
+    public PostAdapter(Context mContext, List<Post> mPost) {
+        this.mContext = mContext;
+        this.mPost = mPost;
+    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(mContext).inflate(R.layout.post_item, parent, false);
+        return new PostAdapter.ViewHolder(view);
     }
 
     @Override
@@ -32,7 +36,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        return 0;
+
+        return mPost.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
