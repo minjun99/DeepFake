@@ -4,19 +4,19 @@
         android:id="@+id/action_home"
         android:enabled="true"
         android:icon = "@drawable/ic_baseline_home_24"
-        android:title="HOME"
+        android:title=""
         />
 
     <item
         android:id="@+id/action_add"
         android:enabled="true"
         android:icon = "@drawable/ic_baseline_add_box_24"
-        android:title="ADD"/>
+        android:title=""/>
 
     <item
         android:id="@+id/action_mypage"
         android:enabled="true"
         android:icon = "@drawable/ic_baseline_person_24"
-        android:title="My Page"/>
+        android:title=""/>
 
 </menu>
