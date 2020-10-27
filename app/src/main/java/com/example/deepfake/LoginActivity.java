@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmailEdit = (EditText) findViewById(R.id.email);
         mPasswordEdit = (EditText) findViewById(R.id.password);
 
-        mLoginButton = (Button) findViewById(R.id.btn_login);
+        mLoginButton = (Button) findViewById(R.id.button_login);
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mSignUpButton = (Button) findViewById(R.id.sign_up);
+        mSignUpButton = (Button) findViewById(R.id.button_signup);
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,8 +64,6 @@ public class LoginActivity extends AppCompatActivity {
     private JSONObject getLoginBody() {
         JSONObject jsonBody = new JSONObject();
 
-        jsonBody.put("flag_1", "account");
-        jsonBody.put("flag_2", "login");
         jsonBody.put("email", mEmailEdit.getText().toString());
         jsonBody.put("password", mPasswordEdit.getText().toString());
 
@@ -73,11 +71,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void sendLoginRequest() {
-        final String mRequestBody = getLoginBody().toString();
+        final String url = mRequestUrl + "?mode=account_login";
+        final String body = getLoginBody().toString();
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
-                mRequestUrl,
+                url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -113,9 +112,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public byte[] getBody() throws AuthFailureError {
                 try {
-                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                    return body.getBytes("utf-8");
                 } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", body, "utf-8");
                     return null;
                 }
             }
@@ -128,8 +127,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        request.setShouldCache(false); // 이전 결과 있어도 새로 요청하여 응답을 보여준다.
-        AppHelper.requestQueue = Volley.newRequestQueue(this); // requestQueue 초기화 필수
+        request.setShouldCache(false);
+        AppHelper.requestQueue = Volley.newRequestQueue(this);
         AppHelper.requestQueue.add(request);
     }
 }
