@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,8 +41,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             holder.description.setVisibility(View.VISIBLE);
             holder.description.setText(post.getDescription());
         }
-
-
     }
 
     @Override
@@ -51,7 +50,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ImageView image_profile,post_image, like, comment, save;
+        public VideoView post_image;
+        public ImageView image_profile, like, comment, save;
         public TextView username, likes, publisher, description, comments;
 
 

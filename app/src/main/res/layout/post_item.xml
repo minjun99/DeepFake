@@ -33,11 +33,11 @@
 
         </LinearLayout>
 
-        <ImageView
+        <VideoView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/post_image"
-            android:src="@drawable/bow"/>
+            android:adjustViewBounds="true"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -1,12 +1,52 @@
 package com.example.deepfake;
 
-public class Post {
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.MediaController;
+import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
+
+public class Post extends AppCompatActivity {
     private String postid;
-    private String postimage;
+    private VideoView postimage;
     private String description;
     private String publisher;
 
-    public Post(String postid, String postimage, String description, String publisher) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.post_item);
+        postimage = findViewById(R.id.post_image);
+        Uri videoUri = Uri.parse("https://storage.googleapis.com/fakebook-posts/test7.mp4");
+        postimage.setMediaController(new MediaController(this));
+        postimage.setVideoURI(videoUri);
+        postimage.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                postimage.start();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if(postimage!=null&&postimage.isPlaying()) postimage.pause();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        if(postimage!=null) postimage.stopPlayback();
+    }
+
+    public Post(String postid, VideoView postimage, String description, String publisher) {
         this.postid = postid;
         this.postimage = postimage;
         this.description = description;
@@ -24,11 +64,11 @@ public class Post {
         this.postid = postid;
     }
 
-    public String getPostimage() {
+    public VideoView getPostimage() {
         return postimage;
     }
 
-    public void setPostimage(String postimage) {
+    public void setPostimage(VideoView postimage) {
         this.postimage = postimage;
     }
 
