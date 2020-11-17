@@ -24,6 +24,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText mEmailEdit;
+    private EditText mUsernameEdit;
     private EditText mPasswordEdit;
 
     private Button mLoginButton;
@@ -37,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         mEmailEdit = (EditText) findViewById(R.id.email);
+        mUsernameEdit = (EditText) findViewById(R.id.username);
         mPasswordEdit = (EditText) findViewById(R.id.password);
 
         mSignUpButton = (Button) findViewById(R.id.sign_up_complete);
@@ -60,20 +62,20 @@ public class RegisterActivity extends AppCompatActivity {
     private JSONObject getSignUpBody() {
         JSONObject jsonBody = new JSONObject();
 
-        jsonBody.put("flag_1", "account");
-        jsonBody.put("flag_2", "signup");
         jsonBody.put("email", mEmailEdit.getText().toString());
+        jsonBody.put("name", mUsernameEdit.getText().toString());
         jsonBody.put("password", mPasswordEdit.getText().toString());
 
         return jsonBody;
     }
 
     public void sendSignUpRequest() {
-        final String mRequestBody = getSignUpBody().toString();
+        final String url = mRequestUrl + "?mode=account_signup";
+        final String body = getSignUpBody().toString();
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
-                mRequestUrl,
+                url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -89,6 +91,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                 startActivity(intent);
+                            } else if (status == 200 && msg.equals("using email")) {
+                                Toast.makeText(getApplicationContext(), "이미 사용중인 이메일입니다", Toast.LENGTH_LONG).show();
+                            } else if (status == 200 && msg.equals("using name")) {
+                                Toast.makeText(getApplicationContext(), "이미 사용중인 이름입니다", Toast.LENGTH_LONG).show();
                             } else {
                                 Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_LONG).show();
                             }
@@ -109,9 +115,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public byte[] getBody() throws AuthFailureError {
                 try {
-                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                    return body.getBytes("utf-8");
                 } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", body, "utf-8");
                     return null;
                 }
             }
@@ -122,10 +128,17 @@ public class RegisterActivity extends AppCompatActivity {
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
+
+            @Override
+            public Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("mode", "account_signup");
+                return params;
+            }
         };
 
-        request.setShouldCache(false); // 이전 결과 있어도 새로 요청하여 응답을 보여준다.
-        AppHelper.requestQueue = Volley.newRequestQueue(this); // requestQueue 초기화 필수
+        request.setShouldCache(false);
+        AppHelper.requestQueue = Volley.newRequestQueue(this);
         AppHelper.requestQueue.add(request);
     }
 }

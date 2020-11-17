@@ -19,20 +19,20 @@ import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity {
-    private BottomNavigationView bottomNavigationView;
-    private FragmentManager fm;
-    private FragmentTransaction ft;
-    private frag_home frag1;
-    private frag_add frag2;
-    private frag_mypage frag3;
+    private BottomNavigationView mBottomNavigationView;
+    private FragmentManager mFragManager;
+    private FragmentTransaction mFragTransaction;
+    private frag_home mFragHome;
+    private frag_add mFragAdd;
+    private frag_mypage mFragMyPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bottomNavigationView = findViewById(R.id.bottomNavi);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        mBottomNavigationView = findViewById(R.id.bottomNavi);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
@@ -50,27 +50,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        frag1 = new frag_home();
-        frag2 = new frag_add();
-        frag3 = new frag_mypage();
+        mFragHome = new frag_home();
+        mFragAdd = new frag_add();
+        mFragMyPage = new frag_mypage();
         setFrag(0);
     }
 
     private void setFrag(int n) {
-        fm = getSupportFragmentManager();
-        ft = fm.beginTransaction();
+        mFragManager = getSupportFragmentManager();
+        mFragTransaction = mFragManager.beginTransaction();
         switch (n) {
             case 0:
-                ft.replace(R.id.main_frame, frag1);
-                ft.commit();
+                mFragTransaction.replace(R.id.main_frame, mFragHome);
+                mFragTransaction.commit();
                 break;
             case 1:
-                ft.replace(R.id.main_frame, frag2);
-                ft.commit();
+                mFragTransaction.replace(R.id.main_frame, mFragAdd);
+                mFragTransaction.commit();
                 break;
             case 2:
-                ft.replace(R.id.main_frame, frag3);
-                ft.commit();
+                mFragTransaction.replace(R.id.main_frame, mFragMyPage);
+                mFragTransaction.commit();
                 break;
         }
     }
